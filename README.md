@@ -13,7 +13,7 @@ Some of the data feeds used by the app include:
 
 # Developer Workspace
 
-[![Contribute](http://beta.codenvy.com/factory/resources/codenvy-contribute.svg)](http://beta.codenvy.com/f?id=5ayat0naxlljn3p2)
+[![Contribute](http://beta.codenvy.com/factory/resources/codenvy-contribute.svg)](http://beta.codenvy.com/f?id=1zt24oncb3h9enby)
 
 # Recipe
 
