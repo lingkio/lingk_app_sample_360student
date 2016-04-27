@@ -20,3 +20,9 @@ FROM [codenvy/php](https://hub.docker.com/r/codenvy/php/)
 # Preview URL
 
 localhost:$mappedPort/$projectName
+
+# Demos
+
+[Listing Page](http://lingk360student.x10host.com/)
+
+[Example 360 student view with complete data](http://lingk360student.x10host.com/#student/efb85d46ffd44204a00af3b7adbc4e75)
