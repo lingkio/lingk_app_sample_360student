@@ -1,0 +1,336 @@
+<header id="header"></header>
+<section class="content mui-container">
+<div class="mui-panel" style='margin-top: 30px;'>
+
+   <div class="mui-row">
+
+    <div class="mui-col-md-2">
+        <div id="map" class="mui-panel" style="height:180px;"></div>
+        
+        <div class="some-list" style="margin-top: 40px;">
+            <div class="list-item">
+                <label for="other_names" class="mui-tab-label">Status:</label>
+                <span id="other_names">Currently Enrolled</span>
+            </div>
+            <div class="list-item" style="margin-bottom: 20px;">
+                <label for="gender_student" class="mui-tab-label">Enrolment Date:</label>
+                <span id="gender_student">1/10/2015</span>
+            </div>
+            <% if(_.isEmpty(programs)){ %>
+            <% }else{%>
+            <div class="mui--text-body2" style="margin-bottom: 10px;">
+                 <strong>Programs:</strong>
+            </div>
+                <% _.forEach(programs, function(program, i) { %>
+                    <div class="list-item">
+                        <label for="directory_information_student" class="mui-tab-label">Name:</label>
+                        <span><%= program.name %></span>
+                    </div>
+                    <div class="list-item" style="margin-bottom: 20px;">
+                        <label for="directory_information_student" class="mui-tab-label">Level:</label>
+                        <span><%= program.postsecondaryProgramLevel %></span>
+                    </div>
+                <% });%>
+            <% }%>
+        </div>
+
+    </div>
+
+    <div class="mui-col-md-7">
+               
+        <div class="section-title" style="margin-top: 0;margin-bottom: 30px;">
+            <div class="mui--text-display1"><%= seif.last_name  %>, <%= seif.first_name %></div>
+        </div>
+        <div class="some-list" style="margin-bottom: 30px;">
+            <div class="list-item">
+                <label for="other_names">Other Names:</label>
+                <span id="other_names"><%= seif.otherName  %></span>
+            </div>
+            <div class="list-item">
+                <label for="gender_student">Gender:</label>
+                <span id="gender_student"><%= seif.gender  %></span>
+            </div>            
+            <div class="list-item">
+                <label for="birthdate_student">Birth Date:</label>
+                <span id="birthdate_student"><%= seif.birthdate %></span>
+            </div>
+            <div class="list-item">
+                <label for="directory_information_student">Directory Information:</label>
+                <span id="directory_information_student">Allowed</span>
+            </div>
+        </div>
+        
+        <div class="some-tab">
+            <div class="tabs-list">
+                <ul class="mui-tabs__bar mui-tabs__bar--justified">
+                  <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="contact-information" style="background-color: #CCC2C2;">Contact Information</a></li>
+                  <li><a data-mui-toggle="tab" data-mui-controls="academic-history" style="background-color: #CCC2C2;">Academic History</a></li>
+                </ul>
+            </div>
+            
+            <div class="tabs-content">
+                <div class="mui-panel mui-tabs__pane mui--is-active" id="contact-information" style="height:inherit;">
+                    <h3>Postal Address(es)</h3>
+                    <% if(_.isEmpty(addresses)){ %>
+
+                        <div class="mui-panel student-info" id="address" data-location="Los-Angeles">
+                            <div class="mui--text-body1"><strong>Address Type</strong></div>
+                            <div class="mui--text-body2">Default City 90001</div>
+                            <div class="star-on"></div>
+                        </div>
+                        <div class="mui-panel student-info" style="margin-left: 300px;margin-top: -146px;" data-location="Los-Angeles">
+                            <div class="mui--text-body1"><strong>Address Type2</strong></div>
+                            <div class="mui--text-body2">Default City2 90001</div>
+                        </div>
+                    <% }else{ %>
+                        <% _.forEach(addresses, function(address, i) { %>
+                             
+                             <% if (i == 0){%>
+                             <div class="mui-panel student-info" id="address"  data-location="<%= address.city %>">
+                                <div class="mui--text-body1"><strong><%= address.addressType  %></strong></div>
+                                <div class="mui--text-body2"><%= address.city  %> <%= address.postalCode  %> <%= address.state  %></div>
+                                <% if(address.isPrimary){%>
+                                    <div class="star-on"></div>  
+                                  <% }%>
+                            </div>
+                            <% }else if(i == 1){ %>
+                            <div class="mui-panel student-info" style="margin-left: 300px;margin-top: -146px;"   data-location="<%= address.city %>">
+                                <div class="mui--text-body1"><strong><%= address.addressType  %></strong></div>
+                                <div class="mui--text-body2"><%= address.city  %> <%= address.postalCode  %> <%= address.state  %></div>
+                                <% if(address.isPrimary){%>
+                                <div class="star-on"></div>
+                                <% }%>
+                            </div>
+                            <% }else if(i%2 == 0){ %>
+                                <div class="mui-panel student-info" data-location="<%= address.city %>">
+                                <div class="mui--text-body1"><strong><%= address.addressType  %></strong></div>
+                                <div class="mui--text-body2"><%= address.city  %> <%= address.postalCode  %> <%= address.state  %></div>
+                                <% if(address.isPrimary){%>
+                                    <div class="star-on"></div>
+                                <% }%>
+                            </div>
+                            <% }else if(i%2 != 0){%>
+                                <div class="mui-panel student-info" style="margin-left: 300px;margin-top: -146px;" data-location="<%= address.city  %>">
+                                <div class="mui--text-body1"><strong><%= address.addressType  %></strong></div>
+                                <div class="mui--text-body2"><%= address.city  %> <%= address.postalCode  %> <%= address.state  %></div>
+                                <% if(address.isPrimary){%>
+                                    <div class="star-on"></div>  
+                                  <% }%>
+                            </div>
+                            <%}%>
+                            <% });%>    
+                    
+                    <% }%>
+                    <h3>Email Address(es)</h3>
+                    <% if(_.isEmpty(emails)){ %>
+                        <div class="mui-panel student-info">
+                            <div class="mui--text-body1"><strong>Default Email Type</strong></div>
+                            <div class="mui--text-body2">Default Email Address</div>
+                            <div class="star-on"></div>
+                        </div>
+                    
+                    <% }else{ %>
+                    
+                        <% _.forEach(emails, function(email, i) { %>
+                             
+                                 <% if (i == 0){%>
+                                 <div class="mui-panel student-info">
+                                    <div class="mui--text-body1"><strong><%= email.emailAddressType  %></strong></div>
+                                    <div class="mui--text-body2"><%= email.emailAddress  %></div>
+                                    <% if(email.isPrimary){%>
+                                        <div class="star-on"></div>  
+                                      <% }%>
+                                </div>
+                                <% }else if(i == 1){ %>
+                                    <div class="mui-panel student-info" style="margin-left: 300px;margin-top: -146px;">
+                                        <div class="mui--text-body1"><strong><%= email.emailAddressType  %></strong></div>
+                                        <div class="mui--text-body2"><%= email.emailAddress  %></div>
+                                    <% if(email.isPrimary){%>
+                                        <div class="star-on"></div>  
+                                      <% }%>
+                                    </div>
+                                <% }else if(i%2 == 0){ %>
+                                    <div class="mui-panel student-info">
+                                        <div class="mui--text-body1"><strong><%= email.emailAddressType  %></strong></div>
+                                        <div class="mui--text-body2"><%= email.emailAddress  %></div>
+                                    <% if(email.isPrimary){%>
+                                        <div class="star-on"></div>  
+                                  <% }%>
+                                    </div>
+                                <% }else if(i%2 != 0){%>
+                                    <div class="mui-panel student-info" style="margin-left: 300px;margin-top: -146px;">
+                                        <div class="mui--text-body1"><strong><%= email.emailAddressType  %></strong></div>
+                                        <div class="mui--text-body2"><%= email.emailAddress  %></div>
+                                    <% if(email.isPrimary){%>
+                                        <div class="star-on"></div>  
+                                      <% }%>
+                                    </div>
+                                <%}%>
+                            <% });%>  
+                   
+                   <% }%>
+                     
+                        
+                     <h3>Phone Number(s)</h3>
+                         <% if(_.isEmpty(telephones)){%>
+                             <div class="mui-panel student-info">
+                                 <div class="mui--text-body1"><strong>Default Number Type</strong></div>
+                                 <div class="mui--text-body2">0000000000000</div>
+                                <div class="star-on"></div>
+                            </div>   
+                         
+                         <% }else{ %>
+                                <% _.forEach(telephones, function(phone, i) { %>
+                             
+                                 <% if (i == 0){%>
+                                 <div class="mui-panel student-info">
+                                    <div class="mui--text-body1"><strong><%= phone.telephoneNumberType  %></strong></div>
+                                    <div class="mui--text-body2"><%= phone.telephoneNumber  %></div>
+                                    <% if(phone.isPrimary){%>
+                                        <div class="star-on"></div>  
+                                      <% }%>
+                                </div>
+                                <% }else if(i == 1){ %>
+                                    <div class="mui-panel student-info" style="margin-left: 300px;margin-top: -146px;">
+                                    <div class="mui--text-body1"><strong><%= phone.telephoneNumberType  %></strong></div>
+                                    <div class="mui--text-body2"><%= phone.telephoneNumber  %></div>
+                                    <% if(phone.isPrimary){%>
+                                        <div class="star-on"></div>  
+                                      <% }%>
+                                </div>
+                                <% }else if(i%2 == 0){ %>
+                                    <div class="mui-panel student-info">
+                                    <div class="mui--text-body1"><strong><%= phone.telephoneNumberType  %></strong></div>
+                                    <div class="mui--text-body2"><%= phone.telephoneNumber  %></div>
+                                    <% if(phone.isPrimary){%>
+                                        <div class="star-on"></div>  
+                                      <% }%>
+                                </div>
+                                <% }else if(i%2 != 0){%>
+                                    <div class="mui-panel student-info" style="margin-left: 300px;margin-top: -146px;">
+                                    <div class="mui--text-body1"><strong><%= phone.telephoneNumberType  %></strong></div>
+                                    <div class="mui--text-body2"><%= phone.telephoneNumber  %></div>
+                                    <% if(phone.isPrimary){%>
+                                        <div class="star-on"></div>  
+                                      <% }%>
+                                    </div>
+                                <%}%>
+                            <% });%>
+ 
+                         
+                         <%}%>
+                         
+                </div>
+                    <div class="mui-panel mui-tabs__pane" id="academic-history" style="height: inherit;">
+                        
+                        <% if(_.isEmpty(academic_history)){%>
+                             <div class="mui--text-body2" style="margin-bottom: 10px;">
+                                <strong>No data avaliable</strong>
+                            </div>  
+                         <% }else{ %>
+                                <% _.forEach(academic_history, function(history, i) { %>
+
+                                    <% if(_.isObject(history)){%>
+                                        <% if(i == 0){%>
+                                        <% _.forEach(history.data_calendar_session, function(calendar_session, i) { %>    
+                                            <div class="mui--text-body2" style="margin-bottom: 10px;margin-top: 10px;">
+                                                <strong><%= calendar_session.designator %></strong>
+                                            </div>
+                                        <% });%>
+                                        <%}%>
+                                        <% _.forEach(history.data_courses_section, function(courses_section, i) { %>    
+                                            <div class="mui--text-body2" style="margin-bottom: 10px;">
+                                                <strong><%= courses_section.courseNumber %> <%= courses_section.courseTitle %> - Section  <%= courses_section.externalId %></strong>
+                                             </div>    
+                                        <% });%> 
+                                        <% if(_.isObject(history) && !_.isArray(history)){%>
+                                            <div class="mui--text-body2">
+                                                <span>Instructors</span>
+                                            </div> 
+                                        <%}%>
+                                        <% _.forEach(history.data_courses_section_instructor, function(instructor, i) { %>    
+                                            <div class="mui--text-body2">
+                                                <span style="margin-left:20px">-  <%= instructor.firstName %>, <%= instructor.middleName %></span>
+                                            </div>     
+                                        <% });%>
+                                    
+                                    
+                                    <%}else{%>
+                                        <div class="mui--text-body2" style="margin-bottom: 10px;">
+                                        <strong>Empty data</strong>
+                                        </div>  
+                                    <%}%>
+                             
+                                 
+                                <% });%>
+ 
+                         
+                         <%}%>
+
+                    </div>
+            </div>        
+        </div>       
+    </div>
+    
+    <div class="mui-col-md-3">
+        <div class="mui-panel" style="height: inherit;">
+            <div class="mui--text-headline">Latest Activity</div>
+            <div class="mui--text-subhead" style="margin-bottom: 10px;"> Learning Events</div>
+            <% if(!_.isEmpty(learner_action)){ %>
+            <% _.forEach(learner_action, function(action) { %>
+                <div class="event_item">
+                    <div class="mui--text-body1"><%=action.lastModified %></div>
+                    <div class="mui--text-body2" style="margin-bottom: 10px;">
+                        <%= seif.last_name  %>, <%= seif.first_name %> <strong><%=action.actionType %></strong>
+                    <span><%= action.objectDescription %></span>
+                    </div>
+                </div>    
+                    
+                <% }); %>
+            
+            <% }else{%>
+                Action
+            
+            <% }%>
+            
+        </div>
+        
+    </div>
+
+</div>
+ </div>     
+</section>
+
+
+<script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: {lat: -34.397, lng: 150.644}
+        });
+        var geocoder = new google.maps.Geocoder();
+          geocodeAddress(geocoder, map);
+        
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+
+        var address = $('#address').data('location');
+
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            console.log('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+      
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"></script>
+    
+<footer id="footer"></footer>

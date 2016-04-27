@@ -1,0 +1,139 @@
+<% if(!_.isEmpty(students)) { %> 
+<div class="mui-content">
+    <div class="mui-content-padded">
+        <ul class="mui-pagination">
+            <li class="mui-previous mui-disabled">
+                <a href="#">
+                    &laquo;
+                </a>
+            </li>
+                <% for(i = 1; i <= total_pages; i++){%>
+                    <% if(i==1) { %>                     
+                        <li class="mui-active">
+                            
+                            <a href="http://light-it-09.tk/api/public/users" data-limit="25" data-offset="<%=i%>"><%=i%></a>
+                        </li>
+                    <% }else{%>
+                        <li>
+                            
+                            <a href="http://light-it-09.tk/api/public/users" data-limit="25" data-offset="<%=i%>"><%=i%></a>
+                        </li>
+                    <%}%>
+                <%}%>
+            
+            <li class="mui-next">
+                <a href="#">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<table class="mui-table mui-table--bordered"><thead><tr><th>External ID</th><th>First name</th><th>Last name</th><th>Birthdate</th><th>Gender</th></tr></thead><tbody><% _.forEach(students, function(student, i) { %><% if(i <= items_per_page){%><tr><td><a class="student_guid" href="/student/<%= student.guid %>"><%= student.id %></a></td><td><%= student.first_name %></td><td><%= student.last_name %></td><td><%= student.birthdate %></td><td><%= student.gender %></td></tr><% }}); %></tbody></table>
+<% } else { %>
+<div class="empty" style="margin:auto 0; text-align:center">No student returned for ID <%= id_filter_val %></div>
+<% } %>
+
+
+
+
+
+<script>
+    mui.init({
+        swipeBack:true
+    });
+    (function($) {
+        $('.mui-pagination').on('tap', 'a', function() {
+            var li = this.parentNode;
+
+            var classList = li.classList;
+            if (!classList.contains('mui-active') && !classList.contains('mui-disabled')) {
+                var active = li.parentNode.querySelector('.mui-active');
+                if (classList.contains('mui-previous')) {
+                    if (active) {
+                        var previous = active.previousElementSibling;
+                        if (previous && !previous.classList.contains('mui-previous')) {
+                            $.trigger(previous.querySelector('a'), 'tap');
+                        } else {
+                            classList.add('mui-disabled');
+                        }
+                    }
+                } else if (classList.contains('mui-next')) {//next
+                    if (active) {
+                        var next = active.nextElementSibling;
+                        if (next && !next.classList.contains('mui-next')) {
+                            $.trigger(next.querySelector('a'), 'tap');
+                        } else {
+                            classList.add('mui-disabled');
+                        }
+                    }
+                } else {//page
+                    active.classList.remove('mui-active');
+                    classList.add('mui-active');
+                    var page = parseInt(this.innerText);
+                    var previousPageElement = li.parentNode.querySelector('.mui-previous');
+                    var nextPageElement = li.parentNode.querySelector('.mui-next');
+                    previousPageElement.classList.remove('mui-disabled');
+                    nextPageElement.classList.remove('mui-disabled');
+                    if (page <= 1) {
+                        previousPageElement.classList.add('mui-disabled');
+                    } else if (page >= 20) {
+                        nextPageElement.classList.add('mui-disabled');
+                    }
+                }
+            }
+        });
+    })(mui);
+    
+    
+    $(document).ready(function(){
+        
+        $(document).on('click','.mui-pagination li a',function(){
+            
+            var url = $(this).attr('href');
+            var offset = $(this).data('offset');
+            var limit = $(this).data('limit');
+            
+            $.ajax({
+               method:'GET',
+               dataType: 'JSON',
+               url: url+'?offset='+offset+'&limit='+limit,
+               success:function(response){
+                  students:[]; 
+                  
+                  var array_st = $.map(response, function(value, index) {
+                    return [value];
+                });
+                    
+                    $('.mui-table tbody tr').remove();
+                    for(i = 0; i < array_st.length; i++){
+                          
+                          if(array_st[i].guid != undefined){
+                              var student = '<tr><td><a class="student_guid" href="/student/'+array_st[i].guid+'">'+array_st[i].id+'</a></td><td>'+array_st[i].first_name+'</td><td>'+array_st[i].last_name+'</td><td>'+array_st[i].birthdate+'</td><td>'+array_st[i].gender+'</td></tr>';
+                                $('.mui-table tbody').append(student);                              
+                          }
+
+                    }
+               },
+               error:function(error){   
+                   console.log(error);
+               }
+                
+                
+            });
+            console.log(url);
+        });
+        
+        if($('.mui-table tbody tr').length >= 1 && $('.mui-table tbody tr').length < 25){
+            $('#search_result_container').find(".mui-content").hide();
+        }else if($('.mui-table tbody tr').length >= 25){
+            $('#search_result_container').find(".mui-content").show();
+        }
+        
+    });
+</script>
+
+
+
