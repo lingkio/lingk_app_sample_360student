@@ -1,5 +1,15 @@
-# web-php-apache2-simple
-A hello world PHP script
+# Lingk Sample App - 360 degree view of the a student
+A PHP project that utilizes a number of Lingk APIs to create a high quality view of a student.
+
+Some of the data feeds used by the app include:
+- Student Demographics
+- Student Enrollment
+- Student Sections
+- Section Instructors
+- Student Program
+- Sections
+- Programs
+- Learning Events
 
 # Developer Workspace
 
